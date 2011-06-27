@@ -19,7 +19,7 @@
 (defn make-topics
   "Construct Topic records from a seq of word seqs"
   [topicwords]
-  (map #(make-topic %1 %2) (-> topicwords count range) topicwords))
+  (doall (map #(make-topic %1 %2) (-> topicwords count range) topicwords)))
          
 ;;
 ;; Count document co-occurrence
@@ -37,14 +37,22 @@
 (defn count-document
   "Given a docment, update all the topic counts"
   [topics document]
-  (map (partial update-topic document) topics))
+  (doall (map (partial update-topic document) topics)))
 
+(defn merge-topic
+  [topic1 topic2]
+  (assoc topic1
+    :counts (merge-with + (:counts topic1) (:counts topic2))
+    :cocounts (merge-with + (:cocounts topic1) (:cocounts topic2))))
+
+(defn merge-topics
+  [topics1 topics2]
+  (doall (map merge-topic topics1 topics2)))
+  
 (defn get-counts
-  "Get counts for all topics over all documents"
-  [argtopics argdocuments]
-  (loop [topics argtopics documents argdocuments]         
-    (if (empty? documents) topics      
-        (recur (count-document topics (first documents)) (rest documents)))))
+  "Get counts for all topics over all docs (doall to avoid stackoverflow!)"
+  [topics documents]
+  (reduce merge-topics (pmap (partial count-document topics) documents)))                             
 
 ;;
 ;; Given counts, compute semantic coherence score
@@ -58,9 +66,9 @@
 
 (defn score-pair
   "Semantic coherence score term for a single word pair"
-  [topic [word1 word2]]
+  [topic [word1 word2]] ;; {:pre [(contains? (:counts topic) word1)]}
   (log (/ (-> topic :cocounts (get ,,, (set [word1 word2]) 0) inc double)
-          (-> topic :counts (get ,,, word1)))))
+          (-> topic :counts (get ,,, word1 1))))) ;; shouldn't need this...
 
 (defn score-topic
   "Calculate semantic coherence score for a single topic"
@@ -79,4 +87,4 @@
   "Each topic is a seq of words, each document is a seq of words"
   [topicwords documents]
   (map build-result (get-counts (make-topics topicwords) documents)))
-       
+
