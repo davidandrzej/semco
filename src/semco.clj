@@ -26,8 +26,6 @@
   [topicwords]
   (doall (map #(make-topic %1 %2) (-> topicwords count range) topicwords)))
          
-
-;; Count document co-occurrence
 (defn update-counter
   "Update counter cts with observed events xs" 
   [cts xs]
@@ -64,8 +62,6 @@
   [topics documents]
   (reduce merge-topics (pmap (partial count-document topics) documents)))
 
-
-;; Given counts, compute semantic coherence score
 (defn topic-words
   "Nested word pairs for a topic (order important due to eq(1) from paper)"
   [topic]
