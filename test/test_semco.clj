@@ -46,9 +46,6 @@
       (is (approx-equal? -0.69314718 (score-topic t1)))
       (is (approx-equal? 1.09861228 (score-topic t2))))))
 
-;;
-;; 
-;; 
 (deftest test-full
   (testing "All-in-one function"
     (let [results (index (semantic-coherence [t1words t2words] docs)

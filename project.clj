@@ -2,4 +2,5 @@
   :description "Topic semantic coherence (Mimno et al, EMNLP 2011)"
   :dependencies [[org.clojure/clojure "1.2.0"]
                  [org.clojure/clojure-contrib "1.2.0"]]
-  :dev-dependencies [[swank-clojure "1.3.1"]])
+  :dev-dependencies [[swank-clojure "1.3.1"]
+                     [marginalia "0.3.2"]])
