@@ -2548,11 +2548,9 @@ Wallach, Edmund Talley, Miriam Leenders, Andrew McCallum. EMNLP,
 </td><td class="codes"><pre class="brush: clojure">
 (defn make-topics
   [topicwords]
-  (doall (map #(make-topic %1 %2) (-&gt; topicwords count range) topicwords)))
-         </pre></td></tr><tr><td class="docs">
-</td><td class="codes"><pre class="brush: clojure"></pre></td></tr><tr><td class="docs"><p>Count document co-occurrence
-Update counter cts with observed events xs" </p>
-</td><td class="codes"><pre class="brush: clojure">(defn update-counter
+  (doall (map #(make-topic %1 %2) (-&gt; topicwords count range) topicwords)))</pre></td></tr><tr><td class="docs"><p>Update counter cts with observed events xs" </p>
+</td><td class="codes"><pre class="brush: clojure">         
+(defn update-counter
   [cts xs]
   (merge-with + cts (frequencies xs)))</pre></td></tr><tr><td class="docs"><p>Update topic counts given observed words in a single document</p>
 </td><td class="codes"><pre class="brush: clojure">
@@ -2580,11 +2578,9 @@ Update counter cts with observed events xs" </p>
 </td><td class="codes"><pre class="brush: clojure">  
 (defn get-counts
   [topics documents]
-  (reduce merge-topics (pmap (partial count-document topics) documents)))
-</pre></td></tr><tr><td class="docs">
-</td><td class="codes"><pre class="brush: clojure"></pre></td></tr><tr><td class="docs"><p>Given counts, compute semantic coherence score
-Nested word pairs for a topic (order important due to eq(1) from paper)</p>
-</td><td class="codes"><pre class="brush: clojure">(defn topic-words
+  (reduce merge-topics (pmap (partial count-document topics) documents)))</pre></td></tr><tr><td class="docs"><p>Nested word pairs for a topic (order important due to eq(1) from paper)</p>
+</td><td class="codes"><pre class="brush: clojure">
+(defn topic-words
   [topic]
   (for [word1 (:words topic)
         word2 (take-while (partial not= word1) (reverse (:words topic)))]
