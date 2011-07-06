@@ -1,13 +1,13 @@
-;; semco - calculate topic semantic coherence scores as described in
-;; Mimno et al (EMNLP 2011)
-;;
-;; David Andrzejewski (andrzejewski1@llnl.gov)
-;;
-;; Optimizing Semantic Coherence in Topic Models. David Mimno, Hanna
-;; Wallach, Edmund Talley, Miriam Leenders, Andrew McCallum. EMNLP,
-;; 2011, Edinburgh, Scotland.
-;;
+
 (ns semco
+  "semco - calculate topic semantic coherence scores as described in
+Mimno et al (EMNLP 2011)
+
+David Andrzejewski (andrzejewski1@llnl.gov)
+
+Optimizing Semantic Coherence in Topic Models. David Mimno, Hanna
+Wallach, Edmund Talley, Miriam Leenders, Andrew McCallum. EMNLP,
+2011, Edinburgh, Scotland."
   (:use [clojure.contrib.generic.math-functions :only (log)])
   (:use [clojure.set :only (intersection)])
   (:use [clojure.contrib.combinatorics :only (combinations)]))
