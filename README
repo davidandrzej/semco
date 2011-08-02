@@ -1,0 +1,40 @@
+semco - calculate topic semantic coherence scores as described in
+Mimno et al (EMNLP 2011) [1]
+
+David Andrzejewski (andrzejewski1@llnl.gov)
+
+
+OVERVIEW           
+
+While the Latent Dirichlet Allocation (LDA) [2] model can be used to
+automatically learn latent topics from text, the interpretability or
+semantic coherence of these topics can vary considerably.  Mimno et al
+[1] propose a topic semantic coherence score computed from in-corpus
+word co-occurrence statistics, and show strong agreement with human
+evaluations.  Given topics and text documents, this code calculates
+semantic coherence scores for each topic.
+
+This calculation is implemented in Clojure.  It should be relatively
+straightforward to call this code from Java if desired.
+
+
+EXAMPLE USAGE
+
+(let [topic1 '("a" "b" "c")
+      topic2 '("x" "y" "z")
+      topics [topic1 topic2]
+      docs  ['("a" "a" "a")
+             '("b" "c" "x" "z")
+             '("x" "x" "y" "z" "a")]]
+ (println (str (semantic-coherence topics docs))))             
+
+
+REFERENCES
+
+[1] Optimizing Semantic Coherence in Topic Models. David Mimno, Hanna
+Wallach, Edmund Talley, Miriam Leenders, Andrew McCallum. EMNLP, 2011,
+Edinburgh, Scotland.
+
+[2] Latent Dirichlet Allocation.  David Blei, Andrew Ng, Michael
+Jordan.  Journal of Machine Learning Research (JMLR) 3 (Mar. 2003),
+993-1022.
