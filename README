@@ -1,7 +1,10 @@
-semco - calculate topic semantic coherence scores as described in
+semco - calculate latent topic semantic coherence scores as described in
 Mimno et al (EMNLP 2011) [1]
 
+
 David Andrzejewski (andrzejewski1@llnl.gov)
+Center for Applied Scientific Computing
+Lawrence Livermore National Laboratory
 
 
 OVERVIEW           
@@ -14,20 +17,32 @@ word co-occurrence statistics, and show strong agreement with human
 evaluations.  Given topics and text documents, this code calculates
 semantic coherence scores for each topic.
 
-This calculation is implemented in Clojure.  It should be relatively
-straightforward to call this code from Java if desired.
-
 
 EXAMPLE USAGE
 
-(let [topic1 '("a" "b" "c")
-      topic2 '("x" "y" "z")
-      topics [topic1 topic2]
-      docs  ['("a" "a" "a")
-             '("b" "c" "x" "z")
-             '("x" "x" "y" "z" "a")]]
- (println (str (semantic-coherence topics docs))))             
+The semantic-coherence takes as input a sequence of "Top N" string
+sequences (the topics) and a sequence of document string sequences
+(the corpus).
 
+The return value is a sequence of {:topic :words :semco} maps, where
+:topic is the numerical index (ie, where in the original input
+sequence was this topic?), :words are the Top N topic words, and
+:semco is the semantic coherence score calculated over the corpus.
+
+(ns my-example
+ (:use semco))
+
+ (let [topics [["a" "b" "c"]
+               ["x" "y" "z"]]
+       docs [["a" "a" "a"]
+             ["b" "c" "x" "z"]
+             ["x" "x" "y" "z" "a"]]]
+  (println "\n")
+  (doseq [result (semantic-coherence topics docs)]
+    (println (format "Topic %d = %s" (:topic result) (:words result)))
+    (println (format "\tsemantic coherence = %f" (:semco result))))
+  (println "\n"))
+                     
 
 REFERENCES
 
@@ -38,3 +53,29 @@ Edinburgh, Scotland.
 [2] Latent Dirichlet Allocation.  David Blei, Andrew Ng, Michael
 Jordan.  Journal of Machine Learning Research (JMLR) 3 (Mar. 2003),
 993-1022.
+
+
+LICENSE
+
+Copyright (c) 2011, Lawrence Livermore National Security, LLC. Produced at
+the Lawrence Livermore National Laboratory. Written by David Andrzejewski,
+andrzejewski1@llnl.gov OCEC-10-073 All rights reserved.
+
+This file is part of the C-Cat package and is covered under the terms
+and conditions therein.  See https://github.com/fozziethebeat/C-Cat
+for details.
+
+This code is free software: you can redistribute it and/or modify it
+under the terms of the GNU General Public License version 2 as
+published by the Free Software Foundation and distributed hereunder to
+you.
+
+THIS SOFTWARE IS PROVIDED "AS IS" AND NO REPRESENTATIONS OR
+WARRANTIES, EXPRESS OR IMPLIED ARE MADE. BY WAY OF EXAMPLE, BUT NOT
+LIMITATION, WE MAKE NO REPRESENTATIONS OR WARRANTIES OF MERCHANT-
+ABILITY OR FITNESS FOR ANY PARTICULAR PURPOSE OR THAT THE USE OF THE
+LICENSED SOFTWARE OR DOCUMENTATION WILL NOT INFRINGE ANY THIRD PARTY
+PATENTS, COPYRIGHTS, TRADEMARKS OR OTHER RIGHTS.
+
+You should have received a copy of the GNU General Public License
+along with this program. If not, see <http://www.gnu.org/licenses/>.
