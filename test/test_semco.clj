@@ -1,3 +1,4 @@
+;; See README for license information
 (ns test-semco
   (:use [clojure.contrib.math :only (abs)])
   (:use [clojure.set :only (index)])

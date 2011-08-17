@@ -1,13 +1,19 @@
-
+;; See README for further license information
 (ns semco
   "semco - calculate topic semantic coherence scores as described in
 Mimno et al (EMNLP 2011)
 
-David Andrzejewski (andrzejewski1@llnl.gov)
-
 Optimizing Semantic Coherence in Topic Models. David Mimno, Hanna
 Wallach, Edmund Talley, Miriam Leenders, Andrew McCallum. EMNLP,
-2011, Edinburgh, Scotland."
+2011, Edinburgh, Scotland.
+
+Copyright (c) 2011, Lawrence Livermore National Security, LLC. Produced at
+the Lawrence Livermore National Laboratory. Written by David Andrzejewski,
+andrzejewski1@llnl.gov OCEC-10-073 All rights reserved.
+
+This file is part of the C-Cat package and is covered under the terms
+and conditions therein.  See https://github.com/fozziethebeat/C-Cat
+for details."
   (:use [clojure.contrib.generic.math-functions :only (log)])
   (:use [clojure.set :only (intersection)])
   (:use [clojure.contrib.combinatorics :only (combinations)]))
